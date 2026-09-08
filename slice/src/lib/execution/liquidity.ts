@@ -72,13 +72,3 @@ export function liquidityWithinBand(market: MarketSnapshot, bandPercent = 1): nu
     .reduce((sum, l) => sum + l.price * l.quantity, 0);
   return bidValue + askValue;
 }
-
-export function marketStatus(
-  market: MarketSnapshot,
-  maxSlippagePercent: number
-): "FAVORABLE" | "CAUTION" | "UNFAVORABLE" {
-  const ceiling = maxSlippagePercent * THRESHOLDS.maxSpreadMultiple;
-  if (market.spreadPercent > ceiling) return "UNFAVORABLE";
-  if (market.spreadPercent > maxSlippagePercent * 0.75) return "CAUTION";
-  return "FAVORABLE";
-}

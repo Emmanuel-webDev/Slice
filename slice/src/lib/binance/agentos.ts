@@ -19,8 +19,6 @@ import type { Capabilities, ExecutionIntent, ExecutionSlice } from "../types/exe
  * The web app therefore never claims trading authorization it does not have.
  */
 
-export const MCP_ENDPOINT = "https://agent.binance.com/mcp/agentic";
-
 /**
  * Trading is only ever enabled when an operator has explicitly wired an
  * MCP-side executor and set this flag. Default is market-data-only.
