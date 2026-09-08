@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Slice redesign palette — lavender canvas, near-black ink surface,
+     lemon accent, coral action, mint healthy-state. See design.md. */
+  --color-canvas: oklch(94.4% 0.014 276);
+  --color-paper: oklch(99.2% 0.004 90);
+  --color-paper-2: oklch(97.5% 0.008 90);
+  --color-ink: oklch(19.8% 0.023 270);
+  --color-ink-2: oklch(26% 0.025 270);
+  --color-muted: oklch(51% 0.018 270);
+  --color-quiet: oklch(67% 0.018 270);
+  --color-line: oklch(89% 0.016 270);
+  --color-line-strong: oklch(80% 0.02 270);
+
+  --color-lemon: oklch(88% 0.185 98);
+  --color-lemon-2: oklch(95.5% 0.12 98);
+  --color-lemon-ink: oklch(32% 0.07 90);
+
+  --color-coral: oklch(65% 0.16 32);
+  --color-coral-dark: oklch(49% 0.135 32);
+  --color-coral-soft: oklch(92% 0.05 32);
+
+  --color-mint: oklch(78% 0.12 164);
+  --color-mint-dark: oklch(38% 0.08 164);
+  --color-mint-soft: oklch(91% 0.052 164);
+
+  --color-blue: oklch(63% 0.12 255);
+  --color-blue-dark: oklch(38% 0.1 255);
+  --color-blue-soft: oklch(92% 0.035 255);
+
+  --radius-sm: 11px;
+  --radius-control: 12px;
+  --radius-panel: 18px;
+  --radius-hero: 28px;
+
+  --breakpoint-sm: 700px;
+  --breakpoint-md: 1050px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.06em;
+}
+
+@keyframes screen-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.screen-enter {
+  animation: screen-enter 220ms ease-out;
+}

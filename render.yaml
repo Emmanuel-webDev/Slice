@@ -1,0 +1,39 @@
+services:
+  # Local sync server: hosts the execution engine (plan/analyze/execute) and
+  # the Binance public-data fetch behind a small HTTP API. This is what both
+  # the browser and an MCP-connected Claude Code session poll/call.
+  #
+  # NOT deployed here: mcp/server.ts. It's a stdio MCP tool meant to run
+  # locally inside a Claude Code session (spawned via `claude mcp add`), not
+  # a hosted service — it has no HTTP surface of its own.
+  - type: web
+    name: slice-server
+    env: node
+    plan: free
+    rootDir: slice
+    buildCommand: npm install
+    startCommand: npx tsx server/index.ts
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+  # Static Vite/React build.
+  - type: web
+    name: slice-app
+    env: static
+    rootDir: slice
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Resolves to slice-server's bare hostname; src/lib/apiBase.ts adds
+      # the https:// scheme. Vite inlines this at build time, so slice-server
+      # must exist (even mid-deploy) before this build step runs — Render's
+      # blueprint apply order handles that.
+      - key: VITE_SLICE_API_BASE
+        fromService:
+          type: web
+          name: slice-server
+          property: host
