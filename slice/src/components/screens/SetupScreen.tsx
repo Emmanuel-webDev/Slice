@@ -117,7 +117,7 @@ export default function SetupScreen({
                 id="slippage"
                 type="number"
                 min={0}
-                step="0.01"
+                step="any"
                 className={`${inputClass} tabular w-full pr-9`}
                 value={value.maxSlippagePercent}
                 onChange={(e) => onChange({ maxSlippagePercent: Number(e.target.value) })}
