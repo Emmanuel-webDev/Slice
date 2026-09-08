@@ -28,12 +28,12 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
-      # Resolves to slice-server's bare hostname; src/lib/apiBase.ts adds
-      # the https:// scheme. Vite inlines this at build time, so slice-server
-      # must exist (even mid-deploy) before this build step runs — Render's
-      # blueprint apply order handles that.
+      # `fromService: property: host` gives Render's private-network hostname
+      # (e.g. "slice-server"), not the public https://<name>.onrender.com URL
+      # a browser can reach — a static site's build needs the public one.
+      # Set this by hand in the Render dashboard to slice-server's actual
+      # public URL (Environment tab → slice-app), then trigger a redeploy so
+      # Vite bakes it in. `sync: false` keeps blueprint re-applies from
+      # overwriting your manual value.
       - key: VITE_SLICE_API_BASE
-        fromService:
-          type: web
-          name: slice-server
-          property: host
+        sync: false
